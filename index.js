@@ -1,9 +1,10 @@
-document.getElementById("convertBtn").addEventListener("click", function () {
-  var currency = document.getElementById("currency").value;
-  var amount = document.getElementById("amount").value;
+document.getElementById("form").addEventListener("submit", function (event) {
+  event.preventDefault();
+  const currency = document.getElementById("currency").value;
+  const amount = document.getElementById("amount").value;
 
   if (currency && amount) {
-    var url =
+    const url =
       "https://api.nbp.pl/api/exchangerates/rates/a/" +
       currency +
       "/?format=json";
@@ -12,12 +13,12 @@ document.getElementById("convertBtn").addEventListener("click", function () {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        var rate = data.rates[0].mid;
-        var result = amount * rate;
-        document.getElementById("result").innerHTML =
+        const rate = data.rates[0].mid;
+        const result = amount * rate;
+        document.getElementById("result").textContent =
           amount + " " + currency + " = " + result.toFixed(2) + " PLN";
       })
-      .catch((error) => console.log("Błąd pobierania danych z API: ", error));
+      .catch((error) => console.error("Błąd pobierania danych z API: ", error));
   } else {
     alert("Proszę wybrać walutę i podać kwotę.");
   }
